@@ -112,22 +112,29 @@ export default (props) => {
       {seeMore && (
         <>
           <Text style={styles.header}>{I18n.t('optionsScreen.chapterHeader')}</Text>
-          {Object.keys(Categories).map((category, index) => (
-            <CheckBox
-              key={index}
-              checked={checkedCategories.includes(Categories[category])}
-              onPress={() => onCheck(Categories[category])}
-              title={`${I18n.t(`config.categories.${Categories[category]}`)} (${
-                countByCategory[Categories[category]]
-              })`}
-              containerStyle={styles.checkbox}
-              textStyle={styles.checkboxText}
-              uncheckedColor="grey"
-              checkedColor={theme.MAIN_COLOR}
-            />
-          ))}
+          {Object.keys(Categories)
+            .filter((category, _) => countByCategory[Categories[category]])
+            .map((category, index) => (
+              <CheckBox
+                key={index}
+                checked={checkedCategories.includes(Categories[category])}
+                onPress={() => onCheck(Categories[category])}
+                title={`${I18n.t(`config.categories.${Categories[category]}`)} (${
+                  countByCategory[Categories[category]]
+                })`}
+                containerStyle={styles.checkbox}
+                textStyle={styles.checkboxText}
+                uncheckedColor="grey"
+                checkedColor={theme.MAIN_COLOR}
+              />
+            ))}
           <View style={styles.centered}>
-            <Button containerStyle={styles.cta} title="JOUER" onPress={startQuizz} type="solid" />
+            <Button
+              containerStyle={styles.cta}
+              title={I18n.t('optionsScreen.playCta')}
+              onPress={startQuizz}
+              type="solid"
+            />
             <Button
               containerStyle={styles.cta}
               title={seeMore ? I18n.t('optionsScreen.lessOptionsCta') : I18n.t('optionsScreen.moreOptionsCta')}
